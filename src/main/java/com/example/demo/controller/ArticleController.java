@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.ArrayList;
 
 @Slf4j  // 로깅을 위한 어노테이션 추가
 @Controller
@@ -47,4 +50,33 @@ public class ArticleController {
         return "";
     }
 
+    // 상세 조회 페이지 요청
+    @GetMapping("/articles/{id}") // {id} : 변수
+    public String showArticle(@PathVariable Long id, Model model) {
+
+        // 1. Article 의 식별자 값 가져오기
+        log.info("this id : " + id);
+
+        // 2. DB 에서 조회
+//        Optional<Article> article = repository.findById(id);
+        Article article = repository.findById(id).orElse(null);
+
+        // 데이터 담는 그릇
+        model.addAttribute("article", article);
+
+        // 3. 반환
+        return "/articles/show";
+    }
+
+    // 목록 조회 페이지 요청
+    @GetMapping("/articles")
+    public String index(Model model) {
+
+        // 1. DB 에서 조회
+        ArrayList<Article> articleList = repository.findAll();
+
+        // 2. 반환
+        model.addAttribute("articleList", articleList);
+        return "/articles/index";
+    }
 }
