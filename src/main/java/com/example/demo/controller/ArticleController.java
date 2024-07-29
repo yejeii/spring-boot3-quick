@@ -82,4 +82,43 @@ public class ArticleController {
         model.addAttribute("articleList", articleList);
         return "/articles/index";
     }
+
+    // 게시글 수정 페이지 요청
+    @GetMapping("/articles/{id}/edit")
+    public String edit(@PathVariable Long id, Model model) {
+
+        log.info("this id : " + id);
+
+        // 1. DB 에서 해당 게시글 조회
+        Article article = repository.findById(id).orElse(null);
+
+        // 2. 반환
+        model.addAttribute("article", article);
+        return "/articles/edit";
+    }
+
+    // 게시글 수정 처리
+    @PostMapping("/articles/update")
+    public String update(ArticleForm form) {
+
+        // 1. DTO 확인
+        log.info(form.toString());
+
+        // 2. 엔티티 변경, DB 에서 수정
+        Article article = form.toEntity();
+        log.info(article.toString());
+
+        // 2-1. 기존 데이터와의 비교 작업
+        Article target = repository.findById(article.getId()).orElse(null);
+
+        // 2-2. 기존 데이터가 null 이 아닐 경우에만 갱신
+        if(target != null) {
+            repository.save(article);
+        }
+
+        // 4. 반환 (redirect: 상세 페이지)
+        return "redirect:/articles/" + article.getId();
+    }
+
+
 }
