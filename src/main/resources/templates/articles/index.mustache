@@ -11,8 +11,22 @@
     <tbody>
     <tr>
         <th>{{id}}</th>
-        <td><a href="/articles/{{id}}">{{title}}</a></td>
-        <td>{{content}}</td>
+        <td><a href="/articles/{{id}}">
+            {{#title}}
+                {{title}}
+            {{/title}}
+            {{^title}}
+                널 값이지롱
+            {{/title}}</a>
+        </td>
+        <td>
+            {{#content}}
+                {{content}}
+            {{/content}}
+            {{^content}}
+                널 값이지롱
+            {{/content}}
+        </td>
     </tr>
     </tbody>
     {{/articleList}}
