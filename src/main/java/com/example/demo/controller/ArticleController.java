@@ -46,8 +46,11 @@ public class ArticleController {
         Article saved = repository.save(article);
         log.info(saved.toString());
 
-        // 3. 반환 (상세 페이지)
-        return "";
+        // 3. 반환 (리다이렉트: 상세 페이지)
+        // Redirect: 클라가 보낸 요청을 마친 후 계속해서 처리할 다음 요청 주소 재지시하는 것
+        //           분리된 기능을 하나의 연속적인 흐름으로 연결 가능
+        //           리다이렉트를 받은 클라는 해당 주소로 다시 요청을 보내고, 서버는 이에 대한 결과를 응답
+        return "redirect:/articles/" + saved.getId();
     }
 
     // 상세 조회 페이지 요청
