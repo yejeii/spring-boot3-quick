@@ -122,7 +122,8 @@ public class ArticleController {
     }
 
     // 게시글 삭제 요청 처리
-    // RedirectAttributes : 리다이렉트 페이지에 사용할 데이터 전달
+    // RedirectAttributes : 리다이렉트 페이지에서 사용할 일회성 데이터를 관리하는 객체
+    //                      addFlashAttribute() 로 리다이렉트된 페이지에서 사용할 일회성 데이터 등록
     @GetMapping("/articles/{id}/delete")
     public String delete(@PathVariable Long id, RedirectAttributes rttr) {
 
