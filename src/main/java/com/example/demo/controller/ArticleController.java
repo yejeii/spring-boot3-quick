@@ -3,14 +3,14 @@ package com.example.demo.controller;
 import com.example.demo.dto.ArticleForm;
 import com.example.demo.entity.Article;
 import com.example.demo.repository.ArticleRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.ArrayList;
-
+@Slf4j  // 로깅을 위한 어노테이션 추가
 @Controller
 public class ArticleController {
 
@@ -36,12 +36,12 @@ public class ArticleController {
     public String create(ArticleForm form) {
 
         // 1. 데이터 받기
-        System.out.println(form.toString());
+        log.info(form.toString());
         Article article = form.toEntity();
 
         // 2. DB 처리
         Article saved = repository.save(article);
-        System.out.println(saved.toString());
+        log.info(saved.toString());
 
         // 3. 반환 (상세 페이지)
         return "";
